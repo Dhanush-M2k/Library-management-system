@@ -1,0 +1,23 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+#
+# NOTE: Render does not offer a managed MySQL database (only Postgres/Redis/
+# key-value), so this blueprint only provisions the web service. Point
+# SPRING_DATASOURCE_URL/USERNAME/PASSWORD at an external MySQL host
+# (PlanetScale, Aiven, Railway, AWS RDS, etc.) via the Render dashboard's
+# Environment tab, or fill in `value:` below before deploying.
+services:
+  - type: web
+    name: library-management-system
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /dashboard
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        sync: false
+      - key: SPRING_DATASOURCE_USERNAME
+        sync: false
+      - key: SPRING_DATASOURCE_PASSWORD
+        sync: false
+      - key: SPRING_JPA_HIBERNATE_DDL_AUTO
+        value: update
